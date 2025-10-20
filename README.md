@@ -1,10 +1,6 @@
-# Monomer starter application
+# Expense Tracker
 
-Starter application for the Monomer library, including:
+An expense tracker written in Haskell. 
 
-- Dependencies
-- Model and events type
-- Event handler
-- UI builder
-
+Monomer library:
 For more information, check https://github.com/fjvallarino/monomer.
