@@ -3,38 +3,14 @@
 
 module Main where
 
+import Monomer
 import Control.Lens
 import Data.Maybe
-import Data.Text (Text)
-import Monomer
 import TextShow
 import Types
+import AppModel
 
 import qualified Monomer.Lens as L
-
-newtype SenderNameField = SenderNameField {
-  _name :: Text
-  } deriving (Show, Eq)
-
-data AppModel = AppModel {
-  _expense :: Double,
-  _revenue :: Double,
-  _senderNameField :: SenderNameField
-} deriving Show
-
-makeLenses 'SenderNameField
-makeLenses 'AppModel
-
-instance Eq AppModel where
-  (==) a b =
-    a ^. expense == b ^. expense &&
-    a ^. revenue == b ^. revenue &&
-    a ^. senderNameField == b ^. senderNameField
-
-  (/=) a b =
-    a ^. expense /= b ^. expense &&
-    a ^. revenue /= b ^. revenue &&
-    a ^. senderNameField /= b ^. senderNameField
 
 data AppEvent
   = AppInit
