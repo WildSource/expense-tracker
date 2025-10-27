@@ -32,8 +32,7 @@ buildUI wenv model = widgetTree where
       label $ "Revenues: " <> showt rev <> "$",
       spacer,
       spacer,
-      label "Sender's name: ",
-      textField (senderNameField . name)
+      button "Create Expense" AppInit
     ] `styleBasic` [padding 10]
 
 handleEvent
