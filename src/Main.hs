@@ -14,7 +14,7 @@ import qualified Monomer.Lens as L
 
 newtype SenderNameField = SenderNameField {
   _name :: Text
-  } deriving Show
+  } deriving (Show, Eq)
 
 data AppModel = AppModel {
   _expense :: Double,
@@ -22,16 +22,23 @@ data AppModel = AppModel {
   _senderNameField :: SenderNameField
 } deriving Show
 
-// TODO implement custom Eq because lens senderNameField inside AppModel (another lens)
+makeLenses 'SenderNameField
+makeLenses 'AppModel
+
 instance Eq AppModel where
-  
+  (==) a b =
+    a ^. expense == b ^. expense &&
+    a ^. revenue == b ^. revenue &&
+    a ^. senderNameField == b ^. senderNameField
+
+  (/=) a b =
+    a ^. expense /= b ^. expense &&
+    a ^. revenue /= b ^. revenue &&
+    a ^. senderNameField /= b ^. senderNameField
 
 data AppEvent
   = AppInit
   deriving (Eq, Show)
-
-makeLenses 'SenderNameField
-makeLenses 'AppModel
 
 buildUI
   :: WidgetEnv AppModel AppEvent
@@ -74,5 +81,9 @@ main = do
       appInitEvent AppInit
       ]
     senderNameField = SenderNameField { _name = "" }
-    model = AppModel { _expense = 0, _revenue = 0 , _senderNameField = senderNameField }
+    model = AppModel {
+      _expense = 0,
+      _revenue = 0 ,
+      _senderNameField = senderNameField
+      }
     
