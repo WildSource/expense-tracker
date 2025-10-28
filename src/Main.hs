@@ -15,13 +15,13 @@ import qualified Monomer.Lens as L
 data AppEvent
   = AppInit
   | CreateExpense
-  | CreateRevenu
-  deriving (Eq, Show)
+  | CreateRevenue
+  deriving Show
 
-type Expense = Int
-type Revenu = Int
+type Exp = Double
+type Rev = Double
 
-buildDashboard :: (Expense, Revenu) -> WidgetNode AppModel ()
+buildDashboard :: (Exp, Rev) -> WidgetNode AppModel AppEvent
 buildDashboard (exp, rev) =
   vstack [ label $ "Profits: " <> showt (rev - exp) <> "$"
          , spacer
@@ -30,11 +30,11 @@ buildDashboard (exp, rev) =
          , label $ "Revenues: " <> showt rev <> "$"
          ]
 
-buildButtonMenu :: TransactionMaker -> WidgetNode () AppEvent
+buildButtonMenu :: TransactionMaker -> WidgetNode AppModel AppEvent
 buildButtonMenu None =
   vstack [ button "Create Expense" CreateExpense
          , spacer 
-         , button "Create Revenu" CreateRevenu
+         , button "Create Revenu" CreateRevenue
          ]
 buildButtonMenu _  = spacer
 
@@ -48,11 +48,11 @@ buildUI wenv model =
       tm = model ^. transactionMaker
       
   in  vstack [ label "Expense Tracker"
-             , _spacer [height 20]
+             , spacer
              , buildDashboard (exp, rev)
-             , _spacer [height 20]
+             , spacer
              , buildButtonMenu tm
-             , _spacer [height 20]
+             , spacer
              ] `styleBasic` [padding 10]
 
 handleEvent
@@ -64,7 +64,7 @@ handleEvent
 handleEvent wenv node model evt = case evt of
   AppInit -> []
   CreateExpense -> []
-  CreateRevenu -> []
+  CreateRevenue -> []
 
 main :: IO ()
 main = do
