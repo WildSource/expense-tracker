@@ -9,26 +9,18 @@ import Data.Text (Text)
 
 import qualified Monomer.Lens as L
 
-newtype SenderNameField = SenderNameField {
-  _name :: Text
-  } deriving (Show, Eq)
+data TransactionMaker
+  = MakeExp
+  | MakeRev
+  | MakeSub
+  | None
+  deriving Show
 
 data AppModel = AppModel {
   _expense :: Double,
   _revenue :: Double,
-  _senderNameField :: SenderNameField
-} deriving Show
+  _transactionMaker :: TransactionMaker
+} deriving (Show, Eq)
 
-makeLenses 'SenderNameField
 makeLenses 'AppModel
 
-instance Eq AppModel where
-  (==) a b =
-    a ^. expense == b ^. expense &&
-    a ^. revenue == b ^. revenue &&
-    a ^. senderNameField == b ^. senderNameField
-
-  (/=) a b =
-    a ^. expense /= b ^. expense &&
-    a ^. revenue /= b ^. revenue &&
-    a ^. senderNameField /= b ^. senderNameField
