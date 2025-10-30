@@ -19,9 +19,11 @@ extra-source-files:
 executable app
   main-is: Main.hs
   other-modules:
+      AppEvent
       AppModel
       Date
       Types
+      UI
       Paths_monomer_starter
   hs-source-dirs:
       src
