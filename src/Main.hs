@@ -16,6 +16,7 @@ data AppEvent
   = AppInit
   | CreateExpense
   | CreateRevenue
+  | CreateSubscription
   deriving Show
 
 type Exp = Double
@@ -35,6 +36,8 @@ buildButtonMenu None =
   vstack [ button "Create Expense" CreateExpense
          , spacer 
          , button "Create Revenu" CreateRevenue
+         , spacer 
+         , button "Create Subcription" CreateSubscription
          ]
 buildButtonMenu _  = spacer
 
@@ -63,8 +66,9 @@ handleEvent
   -> [AppEventResponse AppModel AppEvent]
 handleEvent wenv node model evt = case evt of
   AppInit -> []
-  CreateExpense -> []
-  CreateRevenue -> []
+  CreateExpense -> [Model $ model & transactionMaker %~ (\ old -> MakeExp)]
+  CreateRevenue -> [Model $ model & transactionMaker %~ (\ old -> MakeRev)]
+  CreateSubscription -> [Model $ model & transactionMaker %~ (\ old -> MakeSub)]
 
 main :: IO ()
 main = do
