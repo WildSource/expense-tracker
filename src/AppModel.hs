@@ -14,7 +14,7 @@ data TransactionMaker
   | MakeRev
   | MakeSub
   | None
-  deriving Show
+  deriving (Show, Eq)
 
 data AppModel = AppModel {
   _expense :: Double,
@@ -27,5 +27,6 @@ makeLenses 'AppModel
 instance Eq AppModel where
   (==) a b =
     a ^. expense == b ^. expense &&
-    a ^. revenue == b ^. revenue
-
+    a ^. revenue == b ^. revenue &&
+    a  ^. transactionMaker  == b ^. transactionMaker
+  

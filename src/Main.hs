@@ -31,15 +31,22 @@ buildDashboard (exp, rev) =
          , label $ "Revenues: " <> showt rev <> "$"
          ]
 
-buildButtonMenu :: TransactionMaker -> WidgetNode AppModel AppEvent
-buildButtonMenu None =
+buildButtonMenu :: WidgetNode AppModel AppEvent
+buildButtonMenu =
   vstack [ button "Create Expense" CreateExpense
          , spacer 
          , button "Create Revenu" CreateRevenue
          , spacer 
          , button "Create Subcription" CreateSubscription
          ]
-buildButtonMenu _  = spacer
+
+buildTransactionForm
+  :: TransactionMaker
+  -> WidgetNode AppModel AppEvent
+buildTransactionForm MakeExp = label "Making Expense ..."
+buildTransactionForm MakeRev = label "Making Revenue ..."
+buildTransactionForm MakeSub = label "Making Subscription ..."
+buildTransactionForm None = spacer
 
 buildUI
   :: WidgetEnv AppModel AppEvent
@@ -54,8 +61,9 @@ buildUI wenv model =
              , spacer
              , buildDashboard (exp, rev)
              , spacer
-             , buildButtonMenu tm
+             , buildButtonMenu
              , spacer
+             , buildTransactionForm tm
              ] `styleBasic` [padding 10]
 
 handleEvent
