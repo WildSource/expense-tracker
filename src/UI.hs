@@ -34,12 +34,46 @@ buildButtonMenu =
          , button "Create Subcription" CreateSubscription
          ]
 
+buildExpenseForm :: WidgetNode AppModel AppEvent
+buildExpenseForm =
+  vstack [ label "Recepient: " 
+         , label "[Write shit here ...]"
+         , label "Amount (CAD$): "
+         , label "[Write shit here ...]"
+         , label "Date: "
+         , label "[Write shit here ...]"
+         ]
+
+buildRevenueForm :: WidgetNode AppModel AppEvent
+buildRevenueForm =
+  vstack [ label "Sender: " 
+         , label "[Write shit here ...]"
+         , label "Amount (CAD$): "
+         , label "[Write shit here ...]"
+         , label "Date: "
+         , label "[Write shit here ...]"
+         ]
+
+buildSubscriptionForm :: WidgetNode AppModel AppEvent
+buildSubscriptionForm = vstack
+  [ label "Service: " 
+  , label "[Write shit here ...]"
+  , label "Amount (CAD$): "
+  , label "[Write shit here ...]"
+  , label "Occurence: "
+  , label "[Write shit here ...]"
+  , label "Start Date: "
+  , label "[Write shit here ...]"
+  , label "Billing Date: "
+  , label "[Write shit here ...]"
+  ]
+
 buildTransactionForm
   :: TransactionMaker
   -> WidgetNode AppModel AppEvent
-buildTransactionForm MakeExp = label "Making Expense ..."
-buildTransactionForm MakeRev = label "Making Revenue ..."
-buildTransactionForm MakeSub = label "Making Subscription ..."
+buildTransactionForm MakeExp = buildExpenseForm
+buildTransactionForm MakeRev = buildRevenueForm
+buildTransactionForm MakeSub = buildSubscriptionForm
 buildTransactionForm None = spacer
 
 buildUI
